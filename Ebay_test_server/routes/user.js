@@ -1,10 +1,4 @@
 
-/*
- * GET users listing.
- */
-//var mysql = require('./mysql');
-var mysql = require('mysql');
-var mysql1= require('./mysql');
 var user;
 var passport = require("passport");
 var LocalStrategy = require('passport-local').Strategy;
@@ -95,11 +89,6 @@ var cartModel = mongoose.model("cart", cart_schema);
 var purchase_itemModel = mongoose.model("purchase_item", purchase_item_schema);
 var sold_itemModel = mongoose.model("sold_item", sold_item_schema);
 
-
-
-
-
-
 passport.serializeUser(function(user, done) {
 	  done(null, user._id);
 	});
@@ -111,11 +100,6 @@ passport.serializeUser(function(user, done) {
 	});
 	
 	
-
-
-
-
-
 exports.list = function(req, res){
   res.send("respond with a resource");
 };
@@ -166,17 +150,14 @@ exports.confirm = function(msg, callback){
 	//winston.log('info',req.session.email+' is the user.',new Date(), 'user clicked on checkout to place the order.');
 var sell_quantity;
 var res={};
-//var quantity=[];
 var quant=msg.quantity;
 console.log("QUANTITY SESSION:"+quant);
 var email=msg.email;
 var datetime=msg.datetime;
-//var item_id=[];
 var id=msg.item_id;
 console.log("Item ID SESSION:"+id);
 var se=msg.se;
 console.log("QUANTITY_server:"+quant);
-//var id=msg.id;
 cartModel.find({ email:email }, function (err,records) {
 	if(err){
 		throw err;
@@ -207,7 +188,6 @@ cartModel.find({ email:email }, function (err,records) {
 		for(var j=0;j<records.length;j++)
 			{
 			c++;
-			//var flag=0;
 			pur.emailID=email;
 			pur.item_name=records[j].item_name;
 			pur.item_description=records[j].item_desc;
@@ -217,9 +197,7 @@ cartModel.find({ email:email }, function (err,records) {
 			
 			console.log("Pur.item_nmae:"+pur.item_name);
 			console.log("Pur.quantity:"+pur.quantity);
-			//console.log("before wile");
-			//while(flag==0){
-				//console.log("in while.");
+			
 			pur.save(function(err, ans) {
 				if(err)
 					{
@@ -228,17 +206,17 @@ cartModel.find({ email:email }, function (err,records) {
 				else
 					{
 					console.log("Data inserted:"+c);
-					//flag=1;
+				
 				
 					}
 			});
 			}
-			//}
+		
 		console.log("count:"+c);
 		var c1=0;
 		for(var m=0;m<records.length;m++)
 		{
-			//sol.em=email;
+			
 			c1++;
 			sol.item_name=records[m].item_name;
 			sol.item_description=records[m].item_desc;
@@ -254,7 +232,6 @@ cartModel.find({ email:email }, function (err,records) {
 					}
 				else
 					{
-					//continue;
 					console.log("Seeler console:"+c1);
 			}
 			});
@@ -321,130 +298,7 @@ cartModel.find({ email:email }, function (err,records) {
 }
 });
 
-//res.render('confirm', { title: 'Express', user: req.session.user, handle:req.session.handle });
-
 };
-
-
-//var query= "SELECT * FROM cart WHERE email='"+req.session.email+"';";
-//mysql1.get(function(err,records){
-//	if(err){
-//		throw err;
-//	}
-//	else{
-//		console.log('Inside confirm');
-//		//console.log(records);
-//		var item_name=[];
-//		var item_desc=[];
-//		var quantity=[];
-//		var subtotal=[];
-//		var item_id=[];
-//		
-//		for(var i=0;i<records.length;i++)
-//			{
-//			item_name[i]=records[i].item_name;
-//			item_desc[i]=records[i].item_desc;
-//			quantity[i]=records[i].quantity;
-//			subtotal[i]=records[i].subtotal;
-//			item_id[i]=records[i].itemid;
-//			
-//			}
-//		console.log(item_name);
-//		var record;
-//		var currentdate = new Date();
-//		var datetime = currentdate.getDate() + "/"
-//        + (currentdate.getMonth()+1)  + "/" 
-//        + currentdate.getFullYear(); 
-//		for(var j=0;j<records.length;j++)
-//			{
-//		record={emailID:req.session.email,item_name:item_name[j],item_description:item_desc[j],quantity:quantity[j],subtotal:subtotal[j],date:datetime};
-//		var query= "insert into purchase_item (emailID,item_name,item_description,quantity,subtotal,date) VALUES ('"+req.session.email+"','"+item_name[j]+"','"+item_desc[j]+"','"+quantity[j]+"','"+subtotal[j]+"','"+datetime+"');";
-//		mysql1.add(function(err,res){
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				console.log("Purchase item inserted.");
-//			}
-//		},query);
-//			}
-//		for(var m=0;m<records.length;m++)
-//		{
-//		var query= "insert into sold_item (item_name,item_description,item_price,quantity,em) VALUES ('"+item_name[m]+"','"+item_desc[m]+"','"+subtotal[m]+"','"+quantity[m]+"','"+req.session.se[m]+"');";
-//		mysql1.add(function(err,res){
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				console.log("Sold item inserted.");
-//			}
-//		},query);
-//		
-//	}
-//		var query= "SELECT * FROM cart WHERE email='"+req.session.email+"';";
-//		mysql1.get(function(err,records){
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				console.log('Inside cart select');
-//				var q;
-//				for(var k=0;k<records.length;k++)
-//				{
-//					console.log("jlnds:"+records[k].quantity);
-//				q=records[k].quantity;
-//				console.log("before Q1:"+q);
-//				sell_quantity=parseInt(req.session.quantity[k]);
-//				
-//				//sell_quantity=parseInt(sell_quantity);
-//				//console.log("SELL_QUANT2:"+sell_quantity);
-//				q=sell_quantity-q;
-//				console.log("Q1:"+q);
-//				if(q==0)
-//					{
-//					console.log("Inside confirm if");
-//					var query= "DELETE FROM sell_item WHERE item_id='"+req.session.item_id[k]+"';";
-//					mysql1.add(function(err,result){
-//						if(err){
-//							throw err;
-//						}
-//						else{
-//							console.log("Sell item deleted.");
-//						}
-//					},query);
-//					}
-//				else
-//					{
-//					console.log("Inside confirm if,where q is:"+q);
-//					var query= "UPDATE sell_item SET quantity='"+q+"' WHERE item_id='"+req.session.item_id[k]+"';";
-//
-//					mysql1.add(function(err,result){
-//						if(err){
-//							throw err;
-//						}
-//						else{
-//							console.log("Updated");
-//						}
-//					},query);
-//							
-//					}} 
-//				 }
-//		//},query);
-//		
-////		var query= "DELETE FROM cart WHERE email='"+req.session.email+"';";
-////		mysql1.add(function(err,result){
-////			if(err){
-////				throw err;
-////			}
-////			else{
-////				console.log("hogaya kaam");
-////			}
-////		},query);	
-//	
-//
-//
-//};
-
 	exports.checkout = function(msg, callback){
 		var res={};
 		var email=msg.email;
@@ -495,46 +349,6 @@ cartModel.find({ email:email }, function (err,records) {
 				});}
 		});
 	};
-//		var query= "SELECT * FROM register WHERE email='"+req.session.email+"';";
-//		mysql1.get(function(err,records){
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				var first=records[0].first_name;
-//				var last=records[0].last_name;
-//				var phone=records[0].phone_number;
-//				var address=records[0].address;
-//				var city=records[0].city;
-//				var state=records[0].state;
-//				var zip=records[0].zip;
-//				var q;
-//				console.log('Inside checkout');
-//				var query= "SELECT * FROM cart WHERE email='"+req.session.email+"';";
-//				
-//				mysql1.get(function(err,records){
-//					if(err){
-//						throw err;
-//					}
-//					else{
-//						
-//						var total=0;
-//						
-//						for( var i=0;i<records.length;i++)
-//							{
-//							total= +total + +records[i].subtotal;
-//							}
-//						
-//	res.render('checkout', { title: 'Express', user: req.session.user, handle:req.session.handle,first:first,last:last,address:address,phone:phone,total:total,city:city,state:state,zip:zip });
-//						
-//						
-//					}
-//				},query);
-//				
-//				
-//			}
-//		},query);
-//};
 	
 exports.delete_cart = function(msg, callback){
 	//winston.log('info',req.session.email+' is the user.',new Date(), 'user clicked on delete button to delete item in the cart.');
@@ -611,8 +425,6 @@ exports.cart = function(msg,callback){
 	  var res={};
 	  add.item_name=msg.item_name;
 	  add.item_price=msg.item_price;
-	  //var quantity=req.param("quantity");
-	  //console.log("QUANTITY:"+quantity);
 	  add.quantity=msg.quantity;
 	  add.item_desc=msg.item_desc;
 	  var item_id=msg.item_id;
@@ -656,22 +468,16 @@ exports.cart = function(msg,callback){
 				}
 		});
 };
-	
-//	
-//exports.signin = function(req, res){
-//	var message="";
-//	res.render('signin', { title: 'Express',message:message });
-//	};
-	
+
 	exports.home = function(msg, callback){
 		
 		console.log("In /home");
 		var datetime=msg.datetime;
 		var email=msg.email;
-		//var password=msg.password;
+
 		var res={};
 		var item_name,item_price,item_description,quantity;
-		//console.log("paas:"+password);
+
 		registerModel.find({email:email},function(err,ans){
 			if(err){
 				throw err;
@@ -679,11 +485,11 @@ exports.cart = function(msg,callback){
 			else{
 				console.log("I AM HERE.");
 				console.log("FIRST:"+ans[0].first);
-				//req.session.email=req.param('email');
+				
 				 console.log("EMAIL:"+email);
 				 var user=ans[0].first;
 				 ans.user=user;
-				 //req.session.user=user;
+			
 				 var result = user.substring(0, user.length-1);
 					var handle=result+"-0";
 					console.log('Handle:'+handle);
@@ -693,7 +499,7 @@ exports.cart = function(msg,callback){
 					
 					   console.log('user1:'+user);
 					   
-						    //var reg = new registerModel();	
+							
 						    registerModel.update({email:email},
 	                    			{
 	                    				$set: { last_login_time:datetime
@@ -718,34 +524,15 @@ exports.cart = function(msg,callback){
 									res.handle=ans.handle;
 									res.records=records;
 									callback(null,res);
-									//console.log("RESULT:"+result);
+									
 									//res.render('afterLogin', { title: 'Express',user: req.session.user,handle:req.session.handle,rec:result });
 								}
 							}); 
 	}
 			
 			});
-//		sell_itemModel.find({ quantity: { $gt: 0 } }, function (err,result) {
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				console.log("RESULT:"+result);
-//				res.render('afterLogin', { title: 'Express',user: req.session.user,handle:req.session.handle,rec:result });
-//			}
-//		});
 	};
-//exports.afterLogin = function(req, res){
-//	
-//	req.session.se=[];
-//	req.session.quantity=[];
-//	req.session.item_id=[];
-//	var email=req.param("email");
-//	var password=req.param("password");
-//	var handle,message,json;
-//	winston.log('info',email+' has logged in.',new Date(), 'Logged in after clicking the sign in button, its handle is generated, timestamp inserted to DB');
-//	
-//	};
+
 	var isValidPassword = function(user, password){
 		  return bCrypt.compareSync(password, user.password);
 		};
@@ -770,12 +557,7 @@ exports.cart = function(msg,callback){
 	          res.code = "401";
 				res.value = "User not found.";              
 	        }
-	        // User exists but wrong password, log the error 
-//	        if (!isValidPassword(user, password)){
-//	          console.log('Invalid Password');
-//	          res.code = "401";
-//				res.value = "Invalid password";
-//	        }
+
 	        else{
 	        	var comp=bCrypt.compareSync(password, user.password);
 	        	if(comp==true){
@@ -791,8 +573,6 @@ exports.cart = function(msg,callback){
 	      }
 	    );
 	};
-	//));
-	
 	
 exports.insert = function(msg, callback){
 	var res={};
@@ -822,101 +602,14 @@ exports.insert = function(msg, callback){
 			console.log("ENTERED RIGHT IF.");
 		console.log("User logged in");
 		console.log("res in server=");
-		//res.records=records;
-		//console.dir(res);
+		
 		callback(null,res);
 		}
 	});
 };
 
 
-//	    	console.log("ENTERED findorcreate");
-//	    	//winston.log('info','insert user',new Date(), 'user has clicked on register button to register.');
-//	      registerModel.findOne({'email':username},function(err, user) {
-//	
-//	        if (err){
-//	          console.log('Error in SignUp: '+err);
-//	          return done(err);
-//	        }
-//	     
-//	        if (user) {
-//	          console.log('User already exists');
-//	          var message="User already exists.";
-//			  console.log(message);
-//			  //res.render('signin', { title: 'Express', message:message});
-//			  return done(null, false, 
-//			             req.flash('message','User Already Exists'));
-//	          //return done(null, false);
-//	        } else {
-//	        	console.log("ENTERED the right else");
-//	        	var sign = new registerModel();
-//	          sign.password = createHash(password);
-//	          sign.email = req.param('email');
-//	          sign.first = req.param('firstname');
-//	          sign.last = req.param('lastname');
-//	      	sign.phone_number=null;
-//	    	sign.birthday=null;
-//	    	sign.address=null;
-//	    	sign.city=null;
-//	    	sign.state=null;
-//	    	sign.zip=null;
-//	    	sign.last_login_time=null;
-//	          sign.save(function(err) {
-//	            if (err){
-//	              console.log('Error in Saving user: '+err);  
-//	              throw err;  
-//	            }
-//	            console.log('User Registration succesful'); 
-//	            return done(null, sign);
-//	          });
-//	        }
-//	});
-//	    };
-//	    process.nextTick(findOrCreateUser);
-//	  }));
-//};
-//	var email=req.param("email");
-//	registerModel.findOne({email:email},function(err,ans){
-//		if(err){
-//			throw err;
-//		}
-//		else{
-//			if(ans!=null){
-//				  var message="User already exists.";
-//				  console.log(message);
-//				  res.render('signin', { title: 'Express', message:message});
-//			  }
-//			else{
-//				var sign = new registerModel();		
-//				sign.first=req.param("firstname");
-//				sign.last=req.param("lastname");
-//				
-//	sign.email=email;
-//	sign.password=req.param("password");
-//	sign.phone_number=null;
-//	sign.birthday=null;
-//	sign.address=null;
-//	sign.city=null;
-//	sign.state=null;
-//	sign.zip=null;
-//	sign.last_login_time=null;
-//	sign.save(function(err, newuser) {
-//		if(err)
-//			{
-//			throw err;
-//			}
-//		else
-//			{
-//			console.log(newuser);
-//		
-//			res.redirect('/');
-//			res.end();
-//			}
-//	});
-//			}
-//		}});
-	//};	
-	
+
 
 exports.redirectToHomepage = function(req,res)
 	{
@@ -967,7 +660,7 @@ exports.redirectToHomepage = function(req,res)
 				res.value = "Sucess About";
 				res.records=records;
 				callback(null,res);
-				//console.log("RESULT:"+records);
+				
 				 
 			}
 		});
@@ -1005,18 +698,7 @@ exports.redirectToHomepage = function(req,res)
 				//res.redirect('/home');
 				}
 		});
-		//var record= { email_id: email,item_name : item_name, item_price: price,item_description:item_desc,quantity:quantity,bid_flag:bid,add_time:datetime,expire_time:expire_date };
-//		var query= "insert into sell_item (email_id,item_name,item_price,item_description,quantity,bid_flag,add_time,expire_time) VALUES ('"+email+"','"+item_name+"','"+price+"','"+item_desc+"','"+quantity+"','"+bid+"','"+datetime+"','"+expire_date+"');";
-//
-//		mysql1.add(function(err,res){
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				console.log("Item Inserted.");
-//			}
-//		},query);
-		  
+		
 };
 	exports.about = function(msg, callback){
 		//winston.log('info',req.session.email+' is the user.',new Date(), 'user clicked on about button to see its profile.');
@@ -1051,16 +733,6 @@ exports.redirectToHomepage = function(req,res)
 			res.records=records;
 			console.dir(res);
 			callback(null,res);
-//				first = records[0].first;
-//				 last= records[0].last;
-//				 em=records[0].email;
-//				 birthday=records[0].birthday;
-//				 address=records[0].address;
-//				 city=records[0].city;
-//				 zip=records[0].zip;
-//				 state=records[0].state;
-//				 phone_number=records[0].phone_number;
-				 //res.render('about', { title: 'Express', address:address, city:city, zip:zip,state:state, phone_number:phone_number, user: first, last:last,email:em,handle:req.session.handle,birthday:birthday, });
 			}
 		});		
 	};
@@ -1163,53 +835,7 @@ exports.updateAbout = function(msg, callback){
 		}
 		});  
 			};
-//			var res={};
-//			var sub,quant;
-//		var q=msg.q;
-//		
-//		console.log("QUANTITY:"+q);
-//		var id=msg.id;
-//		//console.log(" BEFORE ID:"+id);
-//		id=id.substring(1,id.length-1);
-//		console.log("ID:"+id);
-//		//console.log("refresh button pressed:" + req.session.se);
-//		cartModel.findOne({item_id:id}, function (err,result) {
-//			if(err){
-//				throw err;
-//			}
-//			else{
-//				//console.log(result);
-//				console.log("INSIDE ELSE");
-//				sub=result.subtotal;
-//			    quant=result.quantity;
-//			    sub=sub/quant;
-//			    sub=sub*q;
-//			    console.log("NEW QUANT:"+q);
-//			    console.log("NEW SUB:"+sub);
-//			    cartModel.update({item_id:id},
-//		    			{
-//		    				$set: { quantity:q,
-//		    					subtotal:sub
-//		    					
-//		    				}
-//		    			},function(err, newuser) {
-//		    				if(err)
-//		    				{
-//		    					res.code = "401";
-//		    					res.value = "Failed Login";
-//		    				throw err;
-//		    				}
-//		    			else{
-//		    				res.code = "200";
-//		    				res.value="Success";
-//		    				callback(null,res);
-//		    				}});
-//		    				
-//		    			}
-//		});
-//		
-//		
-//		};
+
 
 			
 			exports.placeBid = function(msg, callback){
