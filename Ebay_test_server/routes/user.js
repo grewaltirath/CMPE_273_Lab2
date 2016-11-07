@@ -560,7 +560,7 @@ exports.cart = function(msg,callback){
 	    );
 	};
 	
-exports.insert = function(msg, callback){
+exports.insertuser = function(msg, callback){
 	var res={};
 	var email=msg.email;
 	var password=msg.password;
@@ -574,26 +574,51 @@ exports.insert = function(msg, callback){
 	var state=null;
 	var phone_number=null;
 	
-	registerModel.find({ email:msg.email }, function (err,records) {
+	registerModel.find({ email: email }, function (err,records) {
 		if(err){
 			res.code = "401";
 			res.value = "Failed Login";
 			console.log("ENTERED WRONG IF.");
 			throw err;
 		}
+		else if(records>0){
+			console.log("records="+records);
+			res.code="401";
+			callback(null,res);
+		}
 		else{
-			console.log("RESULT:"+records);
-			res.code = "200";
-			res.value = "Sucess About";
+			//console.log("RESULT:"+records);
+			
 			console.log("ENTERED RIGHT IF.");
 		console.log("User logged in");
 		console.log("res in server=");
-		
-		callback(null,res);
-		}
+		var sign = new registerModel();
+        sign.password = createHash(password);
+        sign.email = msg.email;
+        sign.first = msg.first;
+        sign.last = msg.last;
+    	sign.phone_number=null;
+  	sign.birthday=null;
+  	sign.address=null;
+  	sign.city=null;
+  	sign.state=null;
+  	sign.zip=null;
+  	sign.last_login_time=null;
+        sign.save(function(err) {
+          if (err){
+            console.log('Error in Saving user: '+err);  
+            throw err;  
+          }
+        });
+        res.code = "200";
+		res.value = "Sucess About";
+      res.records=records;
+      console.log('User Registration succesful'); 
+      callback(null, res);
+      }
 	});
-};
 
+  };
 
 
 
