@@ -9,20 +9,6 @@ password1 = 'd6F3Efeq';
 var winston = require('winston');
 var bCrypt = require('bcrypt');
 var mq_client = require('../rpc/client');
-var dbconn =  mysql.createConnection({
-	host     : '127.0.0.1',
-    user     : 'root',
-    password : 'Canam@001',
-    database : 'ebay',
-    port	 : 3306
-  });
-dbconn.connect(function(err){
-	  if(err){
-	    console.log('Database connection error');
-	  }else{
-	    console.log('Database connection successful');
-	  }
-	});
 var register_schema = mongoose.Schema({
 	first: String,
 	last: String,
