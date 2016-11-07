@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Sold Items</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="./angularjs/pro.js"> </script>
+
+<style>
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.btn-default {
+    margin-right: 30px;
+}
+.btn-primary {
+    margin-right: 20px;
+}
+</style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+
+<br />
+<ul class="nav nav-tabs">
+  <li><div>
+<a href="/home">
+<img src="ebay1.png" width="90" height="50">
+</a> &nbsp &nbsp &nbsp
+ </div></li> 
+<li>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="color:#337ab7;">Hi! <strong><%= user %></strong>
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+  <li>Handle: <strong> <%= handle %> </strong></li>
+  <li><a href="/about"><span class="glyphicon glyphicon-user"> </span> About</a></li>
+    <li><a href="/logout">Sign out</a></li>
+</ul> </div> </li> 
+
+
+
+<li> <a href="/addItem">Sell</a> </li>
+
+
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+    <a href="#" class="dropbtn">My eBay</a>
+    <div class="dropdown-content">
+      <a href="/purchase">Purchase History</a>
+      <a href="/sold">Sold Items</a>
+      
+    </div>
+<li> <a href="/displayCart"> <span class="glyphicon glyphicon-shopping-cart"></span>Cart</a> 
+ </ul> </ul>
+</div>
+<br /> 
+    <div class="container-fluid">
+    <h3><strong> Sold Items </strong> </h3> <br /> <hr /> <br />
+    <% if(rec.length==0) {%>
+     <h3><strong> There are no sold Items. </strong> </h3> 
+     <% } %>
+    <% for(var i=0;i<rec.length;i++) {%>
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+<strong>Item Name:  <%= rec[i].item_name %> <br /></strong> </div>
+<div class="panel panel-body">
+Item Description: <%= rec[i].item_description %> <br />
+Quantity: <%= rec[i].quantity %> <br />
+Price: $<%= rec[i].item_price %> <br />
+</div>
+</div>
+</div> <br /> 
+
+<% } %>
+</div>
+
+</body> 
+</html>

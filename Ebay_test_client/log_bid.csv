@@ -1,0 +1,11 @@
+bid_id,user_id,item_id,timestamp,bid_amount
+1,chetan@gmail.com,5,13/10/2016 @ 1:27,750
+2,chetan@gmail.com,28,13/10/2016 @ 1:28,200.99
+3,chetan@gmail.com,5,13/10/2016 @ 1:51,751
+4,tirath@gmail.com,5,13/10/2016 @ 20:43,800
+5,avdeep@gmail.com,5,14/10/2016 @ 3:43,805
+6,tirath@gmail.com,5,14/10/2016 @ 18:4,810
+7,john@gmail.com,27,16/10/2016 @ 4:10,2200
+8,john@gmail.com,28,16/10/2016 @ 4:10,201.99
+9,john@gmail.com,27,16/10/2016 @ 4:13,2300
+10,john@gmail.com,11,16/10/2016 @ 6:47,600

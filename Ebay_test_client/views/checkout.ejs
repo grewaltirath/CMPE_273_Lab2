@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Checkout</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="./angularjs/pro.js"> </script>
+
+<style>
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.btn-default {
+    margin-right: 30px;
+}
+.btn-primary {
+    margin-right: 20px;
+}
+</style>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+
+<br />
+<ul class="nav nav-tabs">
+  <li><div>
+<a href="/home">
+<img src="ebay1.png" width="90" height="50">
+</a> &nbsp &nbsp &nbsp
+ </div></li> 
+<li>
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" style="color:#337ab7;">Hi! <strong><%= user %></strong>
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+  <li>Handle: <strong> <%= handle %> </strong></li>
+  <li><a href="/about"><span class="glyphicon glyphicon-user"> </span> About</a></li>
+    <li><a href="/logout">Sign out</a></li>
+</ul> </div> </li> 
+
+
+
+<li> <a href="/addItem">Sell</a> </li>
+
+
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+    <a href="#" class="dropbtn">My eBay</a>
+    <div class="dropdown-content">
+      <a href="/purchase">Purchase History</a>
+      <a href="/sold">Sold Items</a>
+      
+    </div>
+<li> <a href="/displayCart"> <span class="glyphicon glyphicon-shopping-cart"></span>Cart</a> 
+ </ul> </ul>
+</div>
+<br /> 
+
+<div class="container" >
+<h3 >Checkout</h3> <hr /> <br /> 
+<div class="col-sm-8">
+  <div class="panel panel-default">
+  <div class="panel-heading">
+<strong><h4 style="text-align=center;"> Credit Card Details </h4> </strong> <br /> </div>
+<div class="panel-body">
+<form action="/confirm" method="post">
+   Credit Card number: &nbsp &nbsp &nbsp  <input type="text" id="credit" name="credit" maxlength="16" size="20" pattern="^\d{16}$" placeholder="Credit card number" required >
+   <br /> <br />
+   Expiration date(mm/yy): <input type="text" id="exp" name="exp" placeholder="Expiration date" size="20" pattern="^(0[1-9]|1[012])\/\d{2}$" required  >
+   <br /> <br />
+   CVV number: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <input type="text" size="20" id="cvv" placeholder="CVV number" maxlength="3" pattern="^\d{3}$" name="cvv" required >
+   <br /> <br />
+   First Name:  <%= first %> <br /> 
+   Last Name:  <%= last %> <br /> 
+    Phone Number: <%= phone %> <br /> 
+   Shipping Address: <%= address %>, <%= city %>, <%= state %>, <%= zip %> <br /> 
+
+<br /> 
+<input type="submit" value="Submit" class="btn btn-primary">
+   </form> 
+   </div></div> </div>
+   
+   <div class="col-sm-4">
+   <h3 ><strong>Order total: $<%= total %></strong></h3>
+   </div>
+   </div>
+   </body>
+  
+ </html>
+  
