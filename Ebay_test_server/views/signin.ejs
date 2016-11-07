@@ -1,0 +1,157 @@
+<html>
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<style>
+body {
+    padding-top: 100px;
+    background-color:WhiteSmoke;
+
+    
+}
+.btn-login {
+ background-color: #59B2E0;
+ outline: none;
+ color: #fff;
+ font-size: 14px;
+ height: auto;
+ font-weight: normal;
+ padding: 14px 0;
+ text-transform: uppercase;
+ border-color: #59B2E6;
+}
+.btn-login:hover,
+.btn-login:focus {
+ color: #fff;
+ background-color: #53A3CD;
+ border-color: #53A3CD;
+}
+.forgot-password {
+ text-decoration: underline;
+ color: #888;
+}
+.forgot-password:hover,
+.forgot-password:focus {
+ text-decoration: underline;
+ color: #666;
+}
+
+
+</style> </head>
+
+<body>
+
+<div class="container">
+     <div class="row">
+   <div class="col-md-5 col-md-offset-4">
+   <img src="ebay.jpg" alt="ebay"  >
+   
+    <div class="panel panel-login">
+     <div class="panel-heading">
+      <div class="row">
+       <div class="col-xs-6">
+        <a href="#" class="active" id="login-form-link"><span class="glyphicon glyphicon-circle-arrow-right"></span>Sign in</a>
+       </div>
+       <div class="col-xs-6">
+        <a href="#" id="register-form-link"><span class="glyphicon glyphicon-plus-sign"></span>Register</a>
+       </div>
+      </div>
+      <hr>
+     </div>
+     <div class="panel-body">
+      <div class="row">
+       <div class="col-lg-12">
+       <span style="color:red; margin: 10px;"> <strong><%= message %> </strong></span>
+        <form id="login-form" action="/afterLogin" method="post" role="form" name="login" style="display: block;">
+         <div class="form-group">
+          <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" >
+  			
+         </div>
+         <div class="form-group">
+          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+        
+</div>
+         
+         
+         <div class="form-group text-center">
+          <input type="checkbox" tabindex="3" class="" name="remember" id="remember" >
+          <label for="remember"> Remember Me</label>
+         </div>
+
+         
+         <div class="form-group">
+          <div class="row">
+           <div class="col-sm-6 col-sm-offset-3">
+            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary" value="Sign in">
+           </div>
+          </div>
+         </div>
+         <div class="form-group">
+          <div class="row">
+           <div class="col-lg-12">
+            <div class="text-center">
+             <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+            </div>
+           </div>
+          </div>
+         </div>
+         </div>
+        </form>
+
+        <form id="register-form" action="/insertuser" method="post" role="form" style="display: none;">
+         <div class="form-group">
+          <input type="text" name="firstname" id="firstname" tabindex="1" class="form-control" placeholder="First name" value="" required>
+         </div>
+         <div class="form-group">
+          <input type="text" name="lastname" id="lastname" tabindex="1" class="form-control" placeholder="Last name" value="" required>
+         </div>
+         <div class="form-group">
+          <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
+         </div>
+         <div class="form-group">
+          <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$" required
+          >
+         </div>
+         
+         <div class="form-group">
+          <div class="row">
+           <div class="col-sm-6 col-sm-offset-3">
+            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Register">
+           </div>
+          </div>
+         </div>
+        </form>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</body> 
+<script type="text/javascript">
+$(function() {
+
+    $('#login-form-link').click(function(e) {
+  $("#login-form").delay(100).fadeIn(100);
+   $("#register-form").fadeOut(100);
+  $('#register-form-link').removeClass('active');
+  $(this).addClass('active');
+  e.preventDefault();
+ });
+ $('#register-form-link').click(function(e) {
+  $("#register-form").delay(100).fadeIn(100);
+   $("#login-form").fadeOut(100);
+  $('#login-form-link').removeClass('active');
+  $(this).addClass('active');
+  e.preventDefault();
+ });
+
+});
+</script>
+</html>
