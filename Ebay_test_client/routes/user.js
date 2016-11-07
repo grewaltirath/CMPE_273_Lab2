@@ -400,7 +400,7 @@ exports.signin = function(req, res){
 	    passReqToCallback : true
 	  },
 	  function(req,username, password, done) {
-		  console.log("bulla");
+		  console.log("in insert");
 		  var findOrCreateUser = function(){
 	    	console.log("ENTERED findorcreate");
 	    	winston.log('info','insert user',new Date(), 'user has clicked on register button to register.');
@@ -424,52 +424,10 @@ exports.signin = function(req, res){
 					}
 				}
 			});
-
-	    	
-	      registerModel.findOne({'email':username},function(err, user) {
+		  };
+		  process.nextTick(findOrCreateUser);
+		  }));
 	
-	        if (err){
-	          console.log('Error in SignUp: '+err);
-	          return done(err);
-	        }
-	     
-	        if (user) {
-	          console.log('User already exists');
-	          var message="User already exists.";
-			  console.log(message);
-			  //res.render('signin', { title: 'Express', message:message});
-			  return done(null, false, 
-			             req.flash('message','User Already Exists'));
-	          //return done(null, false);
-	        } else {
-	        	console.log("ENTERED the right else");
-	        	var sign = new registerModel();
-	          sign.password = createHash(password);
-	          sign.email = req.param('email');
-	          sign.first = req.param('firstname');
-	          sign.last = req.param('lastname');
-	      	sign.phone_number=null;
-	    	sign.birthday=null;
-	    	sign.address=null;
-	    	sign.city=null;
-	    	sign.state=null;
-	    	sign.zip=null;
-	    	sign.last_login_time=null;
-	    	
-	          sign.save(function(err) {
-	            if (err){
-	              console.log('Error in Saving user: '+err);  
-	              throw err;  
-	            }
-	            console.log('User Registration succesful'); 
-	            return done(null, sign);
-	            
-	          });
-	        }
-	});
-	    };
-	    process.nextTick(findOrCreateUser);
-	  }));
 
 exports.redirectToHomepage = function(req,res)
 	{
